@@ -1,5 +1,5 @@
 module "networking" {
-  source               = "../networking"
+  source               = "/networking"
   vpc_cidr             = var.vpc_cidr
   vpc_name             = var.vpc_name
   cidr_public_subnet   = var.cidr_public_subnet
@@ -8,7 +8,7 @@ module "networking" {
 }
 
 module "security_group" {
-  source              = "../security-groups"
+  source              = "/security-groups"
   ec2_sg_name         = "SG for EC2 to enable SSH(22), HTTPS(443) and HTTP(80)"
   vpc_id              = module.networking.dev_proj_1_vpc_id
   ec2_jenkins_sg_name = "Allow port 8080 for jenkins"
@@ -27,7 +27,7 @@ module "security_group" {
 }*/
 
 module "lb_target_group" {
-  source                   = "../load-balancer-target-group"
+  source                   = "/load-balancer-target-group"
   lb_target_group_name     = "jenkins-lb-target-group"
   lb_target_group_port     = 8080
   lb_target_group_protocol = "HTTP"
@@ -36,7 +36,7 @@ module "lb_target_group" {
 }
 
 module "alb" {
-  source                    = "../load-balancer"
+  source                    = "/load-balancer"
   lb_name                   = "dev-proj-1-alb"
   is_external               = false
   lb_type                   = "application"
